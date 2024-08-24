@@ -1,9 +1,9 @@
 import { Text, View } from "tamagui";
 
-export default function SigninScreen() {
+export default function DashboardScreen() {
   return (
     <View>
-      <Text>SigninScreen</Text>
+      <Text>Dashboard Screen</Text>
     </View>
   );
 }

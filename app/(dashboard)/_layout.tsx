@@ -1,9 +1,9 @@
 import { Stack } from "expo-router";
 
-export function DashboardLayout() {
+export default function DashboardLayout() {
   return (
     <Stack>
-      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="index" />
     </Stack>
   );
 }
