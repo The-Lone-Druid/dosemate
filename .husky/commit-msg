@@ -1,0 +1,5 @@
+# Check if a commit message already exists (e.g., from `git commit -m "..."`)
+if [ -z "$(cat "$1")" ]; then
+  # If no commit message, run Commitizen
+  npx git-cz --hook || exit 1 # Exit with an error code if Commitizen fails
+fi
