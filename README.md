@@ -1,6 +1,8 @@
-# Welcome to your Expo app 👋
+# Welcome to Dosemate app 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+
+This app is a simple medication reminder app that allows users to set reminders for their medications. It is built with React Native and Expo. The app is still in development and will be updated with more features. You're wlcome to contribute to the project.
 
 ## Get started
 
