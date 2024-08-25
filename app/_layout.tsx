@@ -38,7 +38,30 @@ function RootLayoutWrapper() {
     <TamaguiProvider defaultTheme={colorScheme as string} config={appConfig}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Stack>
-          <Stack.Screen name="(dashboard)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="index"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="auth/signin"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="auth/signup"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="dashboard/index"
+            options={{
+              headerShown: false,
+            }}
+          />
           <Stack.Screen name="+not-found" />
         </Stack>
       </ThemeProvider>

@@ -23,14 +23,7 @@ export default function AuthProvider({
   const [user, setUser] = React.useState<UserDto | null>(null);
 
   useEffect(() => {
-    setUser({
-      email: "zahid.shaikh@gmail.com",
-      id: "1",
-      name: "Zahid Shaikh",
-      profilePicture: "https://avatars.githubusercontent.com/u/1024025?v=4",
-      token: "token",
-      isAuthenticated: true,
-    });
+    setUser(null);
   }, []);
 
   async function signIn(email: string, password: string) {
