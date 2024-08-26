@@ -1,14 +1,33 @@
+import { FormProps } from "@/@types/form";
+import { LoginFormDto } from "@/@types/user";
 import StyledButton from "@/components/StyledButton";
 import StyledInput from "@/components/StyledInput";
 import { AntDesign } from "@expo/vector-icons";
-import { Link } from "expo-router";
+import { useForm } from "@tanstack/react-form";
+import { zodValidator } from "@tanstack/zod-form-adapter";
+import { Link, useNavigation } from "expo-router";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Card, H2, H3, Paragraph, View } from "tamagui";
+import zod from "zod";
 
 type Props = {};
 
 const SigninScreen = (props: Props) => {
+  const navigation = useNavigation();
+  const loginForm = useForm<LoginFormDto>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: handleSubmit,
+  });
+
+  function handleSubmit(props: FormProps<LoginFormDto>) {
+    console.log(props.value);
+    navigation.navigate("dashboard/index");
+  }
+
   return (
     <SafeAreaView>
       <View padding={"$4"}>
@@ -21,19 +40,63 @@ const SigninScreen = (props: Props) => {
           </Card.Header>
           <View paddingHorizontal={"$4"} gap={"$2"}>
             <View gap={"$2"}>
-              <Paragraph theme={"alt2"}>Email</Paragraph>
-              <StyledInput
-                inputMode="email"
-                placeholder="Ex: john.doe@gmail.com"
-              />
+              <loginForm.Field
+                name="email"
+                validatorAdapter={zodValidator()}
+                validators={{
+                  onChange: zod.string().email({
+                    message: "Please enter a valid email address.",
+                  }),
+                }}
+              >
+                {(field) => (
+                  <>
+                    <Paragraph theme={"alt2"}>Email</Paragraph>
+                    <StyledInput
+                      value={field.state.value}
+                      onChangeText={field.handleChange}
+                      onBlur={field.handleBlur}
+                      inputMode="email"
+                      placeholder="Ex: john.doe@gmail.com"
+                    />
+                    {field.state.meta.errors.length > 0 && (
+                      <Paragraph color={"$red10"}>
+                        {field.state.meta.errors.join(", ")}
+                      </Paragraph>
+                    )}
+                  </>
+                )}
+              </loginForm.Field>
             </View>
             <View gap={"$2"}>
-              <Paragraph theme={"alt2"}>Password</Paragraph>
-              <StyledInput
-                inputMode="text"
-                secureTextEntry
-                placeholder="Your password"
-              />
+              <loginForm.Field
+                name="password"
+                validatorAdapter={zodValidator()}
+                validators={{
+                  onChange: zod.string().min(1, {
+                    message: "Password is required.",
+                  }),
+                }}
+              >
+                {(field) => (
+                  <>
+                    <Paragraph theme={"alt2"}>Password</Paragraph>
+                    <StyledInput
+                      value={field.state.value}
+                      onChangeText={field.handleChange}
+                      onBlur={field.handleBlur}
+                      inputMode="text"
+                      secureTextEntry
+                      placeholder="Your password"
+                    />
+                    {field.state.meta.errors.length > 0 && (
+                      <Paragraph color={"$red10"}>
+                        {field.state.meta.errors.join(", ")}
+                      </Paragraph>
+                    )}
+                  </>
+                )}
+              </loginForm.Field>
             </View>
           </View>
           <Card.Footer
@@ -42,7 +105,9 @@ const SigninScreen = (props: Props) => {
             gap={"$2"}
             marginTop={"$2"}
           >
-            <StyledButton>Sign In</StyledButton>
+            <StyledButton onPress={loginForm.handleSubmit}>
+              Sign In
+            </StyledButton>
             <Paragraph textAlign="center" paddingTop={"$2"}>
               Don't have an account?{" "}
               <Link style={{ color: "skyblue" }} href={"/auth/signup"}>

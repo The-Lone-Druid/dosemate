@@ -6,3 +6,8 @@ export interface UserDto {
   token: string;
   isAuthenticated: boolean;
 }
+
+export interface LoginFormDto {
+  email: string;
+  password: string;
+}
